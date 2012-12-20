@@ -32,24 +32,53 @@ require_once 'PHP/CodeSniffer/Report.php';
 class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
 {
     /**
+     * The directory where source files reside.
+     *
+     * @var string
+     */
+    protected $srcDir;
+
+    /**
+     * The directory where temporary files reside.
+     *
+     * @var string
+     */
+    protected $tmpDir;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
-        if (!isset($_SERVER['PHPCS_SRC_DIR'])) {
+        $this->srcDir = $this->getDir('PHPCS_SRC_DIR');
+        $this->tmpDir = $this->getDir('PHPCS_TMP_DIR');
+    }
+
+    /**
+     * Retrieves the directory path specified by environment variable.
+     *
+     * @param string $varName Environment variable name
+     *
+     * @return string
+     * @throws PHP_CodeSniffer_Exception
+     */
+    protected function getDir($varName)
+    {
+        if (!isset($_SERVER[$varName])) {
             throw new PHP_CodeSniffer_Exception(
-                'PHPCS_SRC_DIR environment variable is not set'
+                $varName . ' environment variable is not set'
             );
         }
 
-        if (!isset($_SERVER['PHPCS_TMP_DIR'])) {
+        $dir = realpath($_SERVER[$varName]);
+
+        if (false === $dir || !is_dir($dir)) {
             throw new PHP_CodeSniffer_Exception(
-                'PHPCS_TMP_DIR environment variable is not set'
+                $varName . ' is not a directory'
             );
         }
 
-        $this->srcDir = $_SERVER['PHPCS_SRC_DIR'];
-        $this->tmpDir = $_SERVER['PHPCS_TMP_DIR'];
+        return $dir;
     }
 
     /**
