@@ -1,0 +1,63 @@
+{
+    "hash": "b3d3e68656d8fb3c1f229d448c1de283",
+    "packages": [
+        {
+            "name": "morozov/sugarcrm-coding-standards",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@bitbucket.org:morozov/sugarcrm-coding-standards.git",
+                "reference": "ca752ca4ff11823574acb9291d0e5161e8776765"
+            },
+            "require": {
+                "pear/php_codesniffer": "1.4.*"
+            },
+            "time": "2013-01-02 19:38:01",
+            "type": "library",
+            "installation-source": "source",
+            "authors": [
+                {
+                    "name": "Sergei Morozov",
+                    "email": "morozov@tut.by"
+                }
+            ],
+            "description": "Coding standards for SugarCRM core development"
+        },
+        {
+            "name": "pear-pear.php.net/PHP_CodeSniffer",
+            "version": "1.4.3",
+            "dist": {
+                "type": "file",
+                "url": "http://pear.php.net/get/PHP_CodeSniffer-1.4.3.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "php": ">=5.1.2.0"
+            },
+            "replace": {
+                "pear-pear/php_codesniffer": "== 1.4.3.0",
+                "pear/php_codesniffer": "== 1.4.3.0"
+            },
+            "type": "pear-library",
+            "installation-source": "dist",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "include-path": [
+                "/"
+            ],
+            "description": "PHP_CodeSniffer is a PHP5 script that tokenises PHP, JavaScript and CSS files to detect violations of a defined coding standard. It is an essential development tool that ensures your code remains clean and consistent. It can also help prevent some common semantic errors made by developers."
+        }
+    ],
+    "packages-dev": null,
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "morozov/sugarcrm-coding-standards": 20
+    }
+}

@@ -5,13 +5,6 @@ STANDARD=SugarCRM
 SRC_DIR=$(git rev-parse --show-toplevel)
 [ $? -eq 0 ] || exit $?;
 
-PHPCS_BIN=$(which phpcs)
-[ $? -eq 0 ] || {
-    RETVAL=$?;
-    echo >&2 "PHP_CodeSniffer is not installed";
-    exit $RETVAL;
-}
-
 TMP_DIR=$(mktemp -d /tmp/tmp.XXXXXXXXXX)
 [ $? -eq 0 ] || exit $?;
 
@@ -22,9 +15,12 @@ echo "$FILES" | xargs -I% git checkout-index --prefix="$TMP_DIR/" -- %
 
 export PHPCS_SRC_DIR=$SRC_DIR
 export PHPCS_TMP_DIR=$TMP_DIR
+
 __FILE__=$(readlink $0)
 __DIR__=$(dirname "$__FILE__/")
-php -d auto_prepend_file="$__DIR__/../src/PHP/CodeSniffer/Reports/Xml.php" $PHPCS_BIN --standard=$STANDARD --report=xml $TMP_DIR
+
+cd "$__DIR__/.."
+php -d auto_prepend_file=src/PHP/CodeSniffer/Reports/Xml.php vendor/bin/phpcs --standard=$STANDARD --report=xml $TMP_DIR
 RESULT=$?
 
 # cleaning temporary directory
