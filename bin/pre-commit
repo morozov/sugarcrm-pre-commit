@@ -22,7 +22,14 @@ echo "$FILES" | xargs -I% git checkout-index --prefix="$TMP_DIR/" -- %
 
 export PHPCS_SRC_DIR=$SRC_DIR
 export PHPCS_TMP_DIR=$TMP_DIR
-__FILE__=$(readlink $0)
+
+if [ -h $0 ]
+then
+    __FILE__=$(readlink $0)
+else
+    __FILE__=$0
+fi
+
 __DIR__=$(dirname "$__FILE__/")
 php -d auto_prepend_file="$__DIR__/../src/PHP/CodeSniffer/Reports/Xml.php" $PHPCS_BIN --standard=$STANDARD --report=xml $TMP_DIR
 RESULT=$?
