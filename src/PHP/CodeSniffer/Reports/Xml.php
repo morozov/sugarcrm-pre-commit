@@ -211,6 +211,7 @@ class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
         if (strpos($filename, $this->tmpDir . DIRECTORY_SEPARATOR) === 0) {
             $relative = substr($filename, strlen($this->tmpDir) + 1);
             if (isset($changes[$relative])) {
+                $report['filename'] = $relative;
                 $report['messages'] = array_intersect_key(
                     $report['messages'],
                     array_flip($changes[$relative])
